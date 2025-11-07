@@ -1,0 +1,84 @@
+export function renderBooks(bookData, container) {
+  container.innerHTML = '';
+  bookData.forEach(book => {
+    const bookEl = document.createElement('div');
+    bookEl.className = 'book';
+    bookEl.innerHTML = `
+      <h3>${book.title}</h3>
+      <p>Author: ${book.author}</p>
+      <p>Price: ₹${book.price}</p>
+      <p>Status: ${book.availability}</p>[
+  {import { renderBooks } from './bookList.js';
+import { addToCart, removeFromCart } from './cartManager.js';
+import { updateCartUI } from './uiUpdater.js';
+import bookData from './books.json' assert { type: 'json' };
+
+const bookContainer = document.getElementById('book-list');import { getCart, removeFromCart, calculateTotal } from './cartManager.js';
+
+export function updateCartUI(container) {
+  const cartItems = getCart();
+  container.innerHTML = '';
+  cartItems.forEach(item => {
+    const itemEl = document.createElement('div');
+    itemEl.className = 'cart-item';
+    itemEl.innerHTML = `
+      <span>${item.title} - ₹${item.price}</span>
+      <button data-id="${item.id}">Remove</button>
+    `;
+    container.appendChild(itemEl);
+  });
+
+  const totalEl = document.createElement('p');
+  totalEl.textContent = `Total: ₹${calculateTotal()}`;
+  container.appendChild(totalEl);
+}
+const cartContainer = document.getElementById('cart');
+
+renderBooks(bookData, bookContainer);
+
+bookContainer.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON') {
+    const bookId = Number(e.target.dataset.id);
+    const book = bookData.find(b => b.id === bookId);
+    if (book && book.availability === 'in stock') {
+      addToCart(book);
+      updateCartUI(cartContainer);
+    }
+  }
+});
+
+cartContainer.addEventListener('click', (e) => {
+  if (e.target.tagName === 'BUTTON') {
+    const bookId = Number(e.target.dataset.id);
+    removeFromCart(bookId);
+    updateCartUI(cartContainer);
+  }
+});
+    "id": 1,
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "price": 450,
+    "availability": "in stock"
+  },
+  {
+    "id": 2,
+    "title": "You Don't Know JS",
+    "author": "Kyle Simpson",
+    "price": 380,
+    "availability": "out of stock"
+  },
+  {
+    "id": 3,
+    "title": "JavaScript: The Good Parts",
+    "author": "Douglas Crockford",
+    "price": 320,
+    "availability": "in stock"
+  }
+]
+      <button ${book.availability !== 'in stock' ? 'disabled' : ''} data-id="${book.id}">
+        Add to Cart
+      </button>
+    `;
+    container.appendChild(bookEl);
+  });
+}
